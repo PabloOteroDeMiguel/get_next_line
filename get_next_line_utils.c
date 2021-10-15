@@ -6,7 +6,7 @@
 /*   By: potero-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 13:47:50 by potero-d          #+#    #+#             */
-/*   Updated: 2021/10/14 15:55:52 by potero-d         ###   ########.fr       */
+/*   Updated: 2021/10/14 17:55:09 by potero-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,19 @@ void	*ft_calloc_bzero(size_t count, size_t size)
 		s[i] = '\0';
 		i++;
 	}
+	return (str);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*str;
+
+	if (!s1 || !s2)
+		return (0);
+	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!str)
+		return (0);
+	ft_strlcpy(str, s1, (ft_strlen(s1) + 1));
+	ft_strlcat(str, s2, (ft_strlen(s1) + ft_strlen(s2) + 1));
 	return (str);
 }
