@@ -6,7 +6,7 @@
 /*   By: potero-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 13:47:50 by potero-d          #+#    #+#             */
-/*   Updated: 2021/10/18 16:56:08 by potero-d         ###   ########.fr       */
+/*   Updated: 2021/10/19 12:42:32 by potero-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,14 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 
 void	*ft_calloc_bzero(size_t count, size_t size)
 {
-	void	*str;
+//	void	*str;
 	size_t	i;
 	char	*s;
 
 	i = 0;
-	str = malloc(count * size);
-	s = (char *)str;
-	if (!str)
+	s = malloc(count * size);
+//	s = (char *)str;
+	if (!s)
 		return (0);
 	while (i < (count * size))
 	{
@@ -115,7 +115,7 @@ void	*ft_calloc_bzero(size_t count, size_t size)
 		i++;
 	}
 	s[i] = 0;
-	return (str);
+	return (s);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
