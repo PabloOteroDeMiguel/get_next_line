@@ -3,113 +3,90 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: potero <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: potero-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/08 11:22:42 by potero            #+#    #+#             */
-/*   Updated: 2021/10/19 13:13:43 by potero-d         ###   ########.fr       */
+/*   Created: 2021/10/20 12:49:35 by potero-d          #+#    #+#             */
+/*   Updated: 2021/10/20 13:27:50 by potero-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"get_next_line.h"
 
-char	*get_next_line(int fd)
+size_t	ft_strlen(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return(i);
+}
+
+size_t	ft_read(char *buff, char *rest)
 {
 	char	*buff;
-	char	*print;
 	char	*aux;
-	char	*aux2;
-	size_t	i;
-	static char	*rest;
 
 	buff = ft_calloc_bzero(1, (BUFFER_SIZE + 1));
- 	read(fd, buff, BUFFER_SIZE);
-	printf("buff: %p\n", buff);
-	printf("fd: %d\n", fd);
-	if (fd == -1 || ft_strlen(buff) == 0)
-	{
-		free(buff);
-		return (0);
-	}
-	print = ft_calloc_bzero(1, 1);
+	read(fd, buff, BUFFER_SIZE);
 	if (rest != 0)
 	{
-		aux = ft_substr(buff, 0, ft_strlen(buff));
-		free(buff);
+		aux = buff;
 		buff = ft_strjoin(rest, aux);
 		free(rest);
 		free(aux);
 	}
-	i = 0;
-	while (buff[i] != '\n')
-	{
-	 	if (i == ft_strlen(buff) - 1)
-		{
-			aux = print;
-			free(print);
-			print  = ft_strjoin(aux, buff);
-			free(buff);
-			buff = ft_calloc_bzero(1, (BUFFER_SIZE + 1));
-			read(fd, buff, BUFFER_SIZE);
-			if (ft_strlen(buff) == 0)
-			{
-				free(buff);
-				break;
-			}
-			i = -1;
-		}
-		i++;
-	}
-	aux2 = ft_substr(buff, 0, i);
+	return (ft_strlen(buff));
+
+size_t	ft_notn(char *print, *buff)
+{
+	char	*aux;
+
+	aux = print;
+	print = ft_strjoin(aux, buff);
+	free(aux);
+	free(buff);
+	buff = ft_calloc_bzero(1, (BUFFER_SIZE + 1));
+	read(fd, buff, BUFFER_SIZE);
+	return (ft_strlen(buff));
+}
+
+char	ft_end(char *buff, char *print, char *rest)
+{
+	char	*aux;
+	char	*aux2;
+
+	aux2 = ft_substr(buff, 0, i[1] + 1);
 	aux = ft_strjoin(print, aux2);
-	free(aux2);
+	free(aux);
 	free(print);
 	if (BUFFER_SIZE > 1)
-		rest = ft_substr(buff, i + 1, (ft_strlen(buff) - i + 1));
+		rest = ft_substr(buff, i[1] + 1, (i[0] - i + 1));
 	free(buff);
-	return (aux);
+	return(aux);
 }
-/*
-int	main(void)
+
+char	*get_next_line(int fd)
 {
-	int		fd;
 	char	*print;
-	
-	fd = open("123.txt", O_RDONLY);
-	if (fd == -1)
-		return (write(1, "NULL\n", 5));
+	char	*buff;
+	char	*rest;
+	size_t	i[2];
 
-	print = get_next_line(fd);	
-	system("leaks a.out");
-	printf("%s\n", print);
-//	printf("--------\n");
-//	print = get_next_line(fd);
-//	printf("%s\n", print);
-//	printf("--------\n");
-//	print = get_next_line(fd);
-//	printf("%s\n", print);
-//	printf("--------\n");
-//	print = get_next_line(fd);
-//	printf("%s\n", print);
-//	close(fd);
-}*/
-
-int				main()
-{
-	int			fd;
-	char		*str;
-	int			i;
-
-	i = 0;
-	fd = open("lotr.txt", O_RDONLY);
-// 	get_next_line(fd, &str);
-//	printf("%s", str); 
-	while ((str = get_next_line(fd)))
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (0);
+	i[0] = ft_read(buff, rest);
+	i[1] = 0;
+	while (buff[i[1]] != '\n')	
 	{
-		printf("line %i=>%s\n", i + 1, str);
-		free(str);
-		i++;
+		if (i[1] == i[0] - 1)
+		{
+			i[0] = ft_notn(print, buff);
+			if (i[0] == 0)
+				break;
+			i[1] = -1;
+		}
+		i[1]++;
 	}
-//	printf("%s\n", str);
-	system("leaks a.out");
-	return (0);
+	return (ft_end(buff, print, rest));
 }
