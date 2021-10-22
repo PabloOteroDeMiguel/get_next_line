@@ -6,7 +6,7 @@
 /*   By: potero-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 13:47:50 by potero-d          #+#    #+#             */
-/*   Updated: 2021/10/19 12:42:32 by potero-d         ###   ########.fr       */
+/*   Updated: 2021/10/22 12:17:16 by potero-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlen(const char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -74,39 +74,13 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
-{
-	size_t	i;
-	size_t	j;
-	size_t	z;
-
-	z = ft_strlen(dst);
-	j = ft_strlen(dst);
-	i = 0;
-	if ((z < dstsize - 1) && dstsize > 0)
-	{
-		while ((j < dstsize - 1) && (src[i] != '\0'))
-		{
-			dst[j] = src[i];
-			i++;
-			j++;
-		}
-		dst[j] = '\0';
-	}
-	if (z >= dstsize)
-		z = dstsize;
-	return (z + ft_strlen(src));
-}
-
 void	*ft_calloc_bzero(size_t count, size_t size)
 {
-//	void	*str;
 	size_t	i;
 	char	*s;
 
 	i = 0;
 	s = malloc(count * size);
-//	s = (char *)str;
 	if (!s)
 		return (0);
 	while (i < (count * size))
@@ -121,13 +95,26 @@ void	*ft_calloc_bzero(size_t count, size_t size)
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*str;
+	int		i;
+	int		j;
 
 	if (!s1 || !s2)
 		return (0);
 	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!str)
 		return (0);
-	ft_strlcpy(str, s1, (ft_strlen(s1) + 1));
-	ft_strlcat(str, s2, (ft_strlen(s1) + ft_strlen(s2) + 1));
+	i = 0;
+	j = 0;
+	while (s1[i] != '\0')
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	while (s2[j] != '\0')
+	{	
+		str[i + j] = s2[j];
+		j++;
+	}
+	str[i + j] = '\0';
 	return (str);
 }
