@@ -6,11 +6,12 @@
 /*   By: potero-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 11:53:01 by potero-d          #+#    #+#             */
-/*   Updated: 2021/10/22 13:54:18 by potero-d         ###   ########.fr       */
+/*   Updated: 2021/10/26 12:20:43 by potero-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include"get_next_line.h"
-
+#include<stdio.h>
+/*
 int	main(void)
 {
 	int		fd;
@@ -37,7 +38,7 @@ int	main(void)
 //	printf("%s\n", print);
 //	close(fd);
 }
-/*
+*/
 int				main()
 {
 	int			fd;
@@ -45,16 +46,16 @@ int				main()
 	int			i;
 
 	i = 0;
-	fd = open("123.txt", O_RDONLY);
+	fd = open("lotr.txt", O_RDONLY);
 // 	get_next_line(fd, &str);
 //	printf("%s", str); 
 	while ((str = get_next_line(fd)))
 	{
-		printf("line %i=>%s", i + 1, str);
+        printf("line %i=>%s", i + 1, str);
 		free(str);
 		i++;
 	}
 //	system("leaks a.out");
 	return (0);
 }
-*/
+

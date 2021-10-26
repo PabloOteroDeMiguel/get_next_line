@@ -6,7 +6,7 @@
 /*   By: potero <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 11:22:42 by potero            #+#    #+#             */
-/*   Updated: 2021/10/22 13:55:12 by potero-d         ###   ########.fr       */
+/*   Updated: 2021/10/26 15:49:41 by potero-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,20 @@
 
 size_t	ft_read(char **buff, char **rest, int fd)
 {
-	char	*aux;
 	size_t	i;
+	size_t	j;
 
-	*buff = ft_calloc_bzero(1, BUFFER_SIZE + 1);
-	read(fd, *buff, BUFFER_SIZE);
-	if (*rest != 0)
+	j = ft_strlen(*rest);
+	if (*rest != 0 && j != 0)
 	{
-		aux = *buff;
-		*buff = ft_strjoin(*rest, aux);
+		*buff = ft_substr(*rest, 0, j + 1);
 		free(*rest);
-		free(aux);
+	}
+	else
+	{
+		free(*rest);
+		*buff = ft_calloc_bzero(1, BUFFER_SIZE + 1);
+		read(fd, *buff, BUFFER_SIZE);
 	}
 	i = ft_strlen(*buff);
 	if (i == 0)
@@ -49,12 +52,15 @@ char	*ft_end(char	**buff, char **print, char	**rest, size_t i[2])
 {
 	char	*aux;
 	char	*aux2;
+	size_t	j;
 
 	aux2 = ft_substr(*buff, 0, i[1] + 1);
 	aux = *print;
 	*print = ft_strjoin(aux, aux2);
 	free(aux);
 	free(aux2);
+
+	j = i[1] + 1;
 	if (BUFFER_SIZE > 1)
 		*rest = ft_substr(*buff, i[1] + 1, (i[0] - i[1] + 1));
 	free(*buff);

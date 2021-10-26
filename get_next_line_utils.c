@@ -6,7 +6,7 @@
 /*   By: potero-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 13:47:50 by potero-d          #+#    #+#             */
-/*   Updated: 2021/10/22 12:17:16 by potero-d         ###   ########.fr       */
+/*   Updated: 2021/10/26 15:48:25 by potero-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,60 +17,44 @@ size_t	ft_strlen(const char *str)
 	size_t	i;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (str && str[i] != '\0')
 		i++;
 	return (i);
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+void	ft_strlcpy(char *dst, const char *src, size_t dstsize, size_t l)
 {
 	size_t			i;
-	unsigned char	*dst1;
-	unsigned char	*src1;
 
 	i = 0;
-	dst1 = (unsigned char *)dst;
-	src1 = (unsigned char *)src;
-	if (dstsize == 0)
-		return (ft_strlen(src));
 	if (dstsize > 0)
 	{	
-		while ((i < dstsize - 1) && (i < ft_strlen(src)))
+		while ((i < dstsize - 1) && (i < l))
 		{
-			dst1[i] = src1[i];
+			dst[i] = src[i];
 			i++;
 		}
-		dst1[i] = '\0';
+		dst[i] = '\0';
 	}
-	return (ft_strlen(src));
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*str;
+	size_t	l;
 
+	l = ft_strlen(s);
 	if (!s)
 		return (0);
-	if (len > ft_strlen(s))
-		len = ft_strlen(s);
-	if (len == 1 && start >= ft_strlen(s))
-	{
-		str = malloc(1);
-		if (!str)
-			return (0);
-		str[0] = '\0';
-		return (str);
-	}
-	else
-		str = malloc(sizeof(char) * (len + 1));
+	if (len > l)
+		len = l;
+	str = malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (0);
-	if (start < ft_strlen(s))
-	{	
-		ft_strlcpy(str, &s[start], len + 1);
-	}
+	if (start < l)
+		ft_strlcpy(str, &s[start], len + 1, l);
 	else
-		ft_strlcpy(str, "", 1);
+		ft_strlcpy(str, "", 1, l);
 	return (str);
 }
 
